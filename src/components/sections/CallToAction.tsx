@@ -8,7 +8,7 @@ export default function CallToAction() {
     <section
       style={{
         padding: "10rem 1.5rem 6rem",
-        backgroundColor: "#050505",
+        backgroundColor: "#0b0b0c",
         position: "relative",
       }}
     >
@@ -18,7 +18,7 @@ export default function CallToAction() {
           style={{
             width: "100%",
             height: "1px",
-            backgroundColor: "rgba(138,138,138,0.2)",
+            backgroundColor: "rgba(166,166,166,0.35)",
             position: "relative",
             marginBottom: "4rem",
           }}
@@ -99,12 +99,12 @@ export default function CallToAction() {
                 fontSize: "0.8rem",
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
-                color: "#8A8A8A",
+                color: "#A6A6A6",
                 transition: "color 0.3s ease",
                 display: "inline-block",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "#E5E4E2")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#8A8A8A")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#A6A6A6")}
             >
               Induct Me
             </span>
@@ -115,7 +115,7 @@ export default function CallToAction() {
         <div
           style={{
             marginTop: "8rem",
-            borderTop: "1px solid rgba(138,138,138,0.1)",
+            borderTop: "1px solid rgba(166,166,166,0.24)",
             paddingTop: "2rem",
           }}
         >
@@ -124,7 +124,7 @@ export default function CallToAction() {
               fontFamily: "var(--font-space)",
               fontSize: "0.65rem",
               letterSpacing: "0.2em",
-              color: "rgba(138,138,138,0.4)",
+              color: "rgba(166,166,166,0.7)",
               textTransform: "uppercase",
             }}
           >

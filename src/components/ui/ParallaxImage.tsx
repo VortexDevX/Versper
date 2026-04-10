@@ -35,7 +35,8 @@ export default function ParallaxImage({
         borderRadius: "8px",
         overflow: "hidden",
         position: "relative",
-        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)",
+        boxShadow: "0 20px 44px -12px rgba(0, 0, 0, 0.55)",
+        border: "1px solid rgba(229, 228, 226, 0.12)",
       }}
     >
       <motion.div
@@ -52,7 +53,7 @@ export default function ParallaxImage({
           src={src}
           alt={alt}
           style={{
-            filter: "grayscale(100%) brightness(0.4)",
+            filter: "grayscale(100%) brightness(0.62)",
             width: "100%",
             height: "100%",
             objectFit: "cover",

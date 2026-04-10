@@ -68,7 +68,7 @@ export default function Hero() {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(to bottom, rgba(5,5,5,0.8) 0%, rgba(5,5,5,0.4) 50%, rgba(5,5,5,0.9) 100%)",
+            "linear-gradient(to bottom, rgba(11,11,12,0.62) 0%, rgba(11,11,12,0.35) 50%, rgba(11,11,12,0.72) 100%)",
           zIndex: 1,
         }}
       />
@@ -81,7 +81,7 @@ export default function Hero() {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(to right, rgba(5,5,5,0.3) 0%, transparent 50%, rgba(5,5,5,0.3) 100%)",
+            "linear-gradient(to right, rgba(11,11,12,0.18) 0%, transparent 50%, rgba(11,11,12,0.18) 100%)",
           zIndex: 2,
         }}
       />
@@ -121,15 +121,15 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <span style={{ color: "#8A8A8A", fontSize: "0.6rem" }}>◆</span>
+          <span style={{ color: "#A6A6A6", fontSize: "0.6rem" }}>◆</span>
         </motion.div>
 
         {/* Tagline */}
         <motion.p
           className="font-space uppercase text-gunmetal"
           style={{
-            fontSize: "clamp(0.55rem, 1.5vw, 0.9rem)",
-            letterSpacing: "0.35em",
+            fontSize: "clamp(0.62rem, 1.5vw, 0.92rem)",
+            letterSpacing: "0.28em",
           }}
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -154,7 +154,7 @@ export default function Hero() {
               letterSpacing: "0.3em",
               background: "transparent",
               border: "none",
-              color: "#8A8A8A",
+              color: "#A6A6A6",
               padding: "1rem 2rem",
               transition: "color 0.5s ease",
             }}
@@ -202,7 +202,7 @@ export default function Hero() {
               width: "1px",
               height: "3rem",
               background:
-                "linear-gradient(to bottom, transparent 0%, rgba(138,138,138,0.5) 50%, rgba(138,138,138,1) 100%)",
+                "linear-gradient(to bottom, transparent 0%, rgba(166,166,166,0.55) 50%, rgba(206,206,206,1) 100%)",
             }}
             animate={{ scaleY: [1, 0.5, 1], opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

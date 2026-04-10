@@ -50,7 +50,7 @@ const ProductText = ({ product }: { product: (typeof products)[0] }) => (
       style={{
         fontFamily: "var(--font-cormorant)",
         fontSize: "8rem",
-        color: "rgba(138,138,138,0.4)",
+        color: "rgba(166,166,166,0.46)",
         lineHeight: 1,
         display: "block",
         marginBottom: "-1.5rem",
@@ -79,7 +79,7 @@ const ProductText = ({ product }: { product: (typeof products)[0] }) => (
         fontFamily: "var(--font-space)",
         fontSize: "1rem",
         lineHeight: 1.8,
-        color: "#8A8A8A",
+        color: "#A6A6A6",
         maxWidth: "400px",
         marginBottom: "2.5rem",
       }}
@@ -93,10 +93,10 @@ const ProductText = ({ product }: { product: (typeof products)[0] }) => (
           fontFamily: "var(--font-space)",
           fontSize: "1rem",
           letterSpacing: "0.2em",
-          color: "#8A8A8A",
+          color: "#A6A6A6",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.color = "#E5E4E2")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "#8A8A8A")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "#A6A6A6")}
       >
         {product.price}
       </span>
@@ -104,7 +104,7 @@ const ProductText = ({ product }: { product: (typeof products)[0] }) => (
         style={{
           height: "1px",
           width: "3rem",
-          backgroundColor: "rgba(138,138,138,0.4)",
+          backgroundColor: "rgba(166,166,166,0.5)",
         }}
       />
       <button
@@ -114,7 +114,7 @@ const ProductText = ({ product }: { product: (typeof products)[0] }) => (
           fontSize: "0.75rem",
           letterSpacing: "0.2em",
           textTransform: "uppercase",
-          color: "#8A8A8A",
+          color: "#A6A6A6",
           background: "none",
           border: "none",
           cursor: "pointer",
@@ -122,7 +122,7 @@ const ProductText = ({ product }: { product: (typeof products)[0] }) => (
           transition: "color 0.3s ease",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.color = "#E5E4E2")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "#8A8A8A")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "#A6A6A6")}
       >
         Acquire
       </button>
@@ -134,13 +134,13 @@ export default function Products() {
   return (
     <section
       id="products"
-      style={{ padding: "8rem 1.5rem", backgroundColor: "#050505" }}
+      style={{ padding: "8rem 1.5rem", backgroundColor: "#0b0b0c" }}
     >
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
         <motion.div
           style={{
             marginBottom: "6rem",
-            borderBottom: "1px solid rgba(138,138,138,0.2)",
+            borderBottom: "1px solid rgba(166,166,166,0.35)",
             paddingBottom: "1.5rem",
           }}
           initial={{ opacity: 0, x: -20 }}
@@ -154,7 +154,7 @@ export default function Products() {
               fontSize: "0.75rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#8A8A8A",
+              color: "#A6A6A6",
             }}
           >
             The Canon
@@ -172,7 +172,8 @@ export default function Products() {
                   height: "70vh",
                   borderRadius: "8px",
                   overflow: "hidden",
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)",
+                  boxShadow: "0 20px 44px -12px rgba(0, 0, 0, 0.55)",
+                  border: "1px solid rgba(229, 228, 226, 0.12)",
                 }}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -190,7 +191,7 @@ export default function Products() {
                     position: "absolute",
                     inset: 0,
                     background:
-                      "linear-gradient(to top, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0) 60%)",
+                      "linear-gradient(to top, rgba(11,11,12,0.78) 0%, rgba(11,11,12,0) 60%)",
                   }}
                 />
                 <div

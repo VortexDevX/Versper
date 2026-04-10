@@ -1,10 +1,10 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 
 @theme {
-  --color-void: #050505;
+  --color-void: #0b0b0c;
   --color-platinum: #e5e4e2;
-  --color-gunmetal: #8a8a8a;
+  --color-gunmetal: #a6a6a6;
+  --color-charcoal: #161618;
 }
 
 /* Explicit font classes to guarantee they work */
@@ -21,15 +21,17 @@ html {
 }
 
 body {
-  background-color: var(--color-void);
+  background:
+    radial-gradient(circle at top, #151518 0%, var(--color-void) 55%),
+    var(--color-void);
   color: var(--color-platinum);
   overflow-x: hidden;
 }
 
 /* Premium Text Selection */
 ::selection {
-  background-color: var(--color-gunmetal);
-  color: var(--color-void);
+  background-color: #c8c8c8;
+  color: #111;
 }
 
 /* Scrollbar Styling for Dark Theme */
@@ -38,7 +40,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-void);
+  background: var(--color-charcoal);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -124,7 +126,7 @@ body {
     transform 0.8s ease;
 }
 .image-hover-wrapper:hover img {
-  filter: grayscale(100%) brightness(0.5) !important; /* Very subtle brightening */
+  filter: grayscale(100%) brightness(0.72) !important;
   transform: scale(1.05) !important; /* Very subtle zoom */
 }
 
@@ -160,7 +162,7 @@ body {
   background: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
-  border-bottom: 1px solid rgba(138, 138, 138, 0.3) !important;
+  border-bottom: 1px solid rgba(166, 166, 166, 0.45) !important;
   border-radius: 0 !important;
   transition: border-color 0.4s ease;
 }
@@ -171,7 +173,7 @@ body {
 }
 
 .premium-input::placeholder {
-  color: #8a8a8a;
+  color: #a6a6a6;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;

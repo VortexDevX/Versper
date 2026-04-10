@@ -56,7 +56,7 @@ export default function Story() {
         justifyContent: "center",
         padding: "6rem 1.5rem",
         overflow: "hidden",
-        backgroundColor: "#050505",
+        backgroundColor: "#0b0b0c",
       }}
     >
       {/* Background Image with Parallax */}
@@ -106,7 +106,7 @@ export default function Story() {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(to bottom, rgba(5,5,5,0.9) 0%, transparent 30%, transparent 70%, rgba(5,5,5,0.9) 100%)",
+            "linear-gradient(to bottom, rgba(11,11,12,0.72) 0%, transparent 30%, transparent 70%, rgba(11,11,12,0.72) 100%)",
           zIndex: 1,
         }}
       />
@@ -118,7 +118,7 @@ export default function Story() {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(5,5,5,0.4)",
+          backgroundColor: "rgba(11,11,12,0.24)",
           zIndex: 2,
         }}
       />
@@ -187,15 +187,15 @@ export default function Story() {
             style={{
               width: "3rem",
               height: "1px",
-              backgroundColor: "rgba(138,138,138,0.3)",
+              backgroundColor: "rgba(166,166,166,0.42)",
             }}
           />
-          <span style={{ color: "#8A8A8A", fontSize: "0.5rem" }}>◆</span>
+          <span style={{ color: "#A6A6A6", fontSize: "0.5rem" }}>◆</span>
           <span
             style={{
               width: "3rem",
               height: "1px",
-              backgroundColor: "rgba(138,138,138,0.3)",
+              backgroundColor: "rgba(166,166,166,0.42)",
             }}
           />
         </motion.div>

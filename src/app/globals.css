@@ -1,26 +1,189 @@
-@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-void: #050505;
+  --color-platinum: #e5e4e2;
+  --color-gunmetal: #8a8a8a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Explicit font classes to guarantee they work */
+.font-cormorant {
+  font-family: var(--font-cormorant), serif;
+}
+.font-space {
+  font-family: var(--font-space), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base Dark Theme & Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-void);
+  color: var(--color-platinum);
+  overflow-x: hidden;
+}
+
+/* Premium Text Selection */
+::selection {
+  background-color: var(--color-gunmetal);
+  color: var(--color-void);
+}
+
+/* Scrollbar Styling for Dark Theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gunmetal);
+}
+
+/* Hero Cinematic Load */
+@keyframes hero-title {
+  0% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes hero-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-title {
+  animation: hero-title 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+.animate-hero-tagline {
+  opacity: 0;
+  animation: hero-fade-in 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s forwards;
+}
+.animate-hero-button {
+  opacity: 0;
+  animation: hero-fade-in 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s forwards;
+}
+
+/* Ambient breathing effect for Hero background */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+.animate-breathe {
+  animation: breathe 20s ease-in-out infinite;
+}
+
+/* Elegant sliding underline for links/buttons */
+.hover-underline {
+  position: relative;
+  display: inline-block;
+}
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #e5e4e2;
+  transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* Smooth image hover transition - REDUCED */
+.image-hover-wrapper img {
+  transition:
+    filter 0.8s ease,
+    transform 0.8s ease;
+}
+.image-hover-wrapper:hover img {
+  filter: grayscale(100%) brightness(0.5) !important; /* Very subtle brightening */
+  transform: scale(1.05) !important; /* Very subtle zoom */
+}
+
+/* Premium Underline Input */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: #e5e4e2; /* Platinum reveal */
+  transition:
+    width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+    left 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.input-wrapper:focus-within::after {
+  width: 100%;
+  left: 0;
+}
+
+.premium-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(138, 138, 138, 0.3) !important;
+  border-radius: 0 !important;
+  transition: border-color 0.4s ease;
+}
+
+.premium-input:focus {
+  border-bottom-color: transparent !important; /* Hides the default line so our platinum one shines */
+  outline: none;
+}
+
+.premium-input::placeholder {
+  color: #8a8a8a;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.premium-input:focus::placeholder {
+  opacity: 0.3;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .animate-breathe {
+    animation: none; /* Disable breathing on mobile for performance */
+  }
 }

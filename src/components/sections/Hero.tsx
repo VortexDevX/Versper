@@ -1,214 +1,163 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { useSound } from "@/components/ui/SoundEngine";
+import Image from "next/image";
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { playClick, playHover } = useSound();
 
   const { scrollYProgress } = useScroll({
-    target: sectionRef,
+    target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.12, 1]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  const scrollToProducts = () => {
-    document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+  // Differential Magnetic Physics for the CTA
+  const btnX = useMotionValue(0);
+  const btnY = useMotionValue(0);
+  const springBtnX = useSpring(btnX, { stiffness: 180, damping: 18 });
+  const springBtnY = useSpring(btnY, { stiffness: 180, damping: 18 });
+
+  const textMagneticX = useTransform(springBtnX, (v) => v * 1.6);
+  const textMagneticY = useTransform(springBtnY, (v) => v * 1.6);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    btnX.set((e.clientX - centerX) * 0.35);
+    btnY.set((e.clientY - centerY) * 0.35);
+  };
+
+  const handleMouseLeave = () => {
+    btnX.set(0);
+    btnY.set(0);
+  };
+
+  const scrollToCanon = () => {
+    playClick();
+    document.getElementById("canon")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section
-      ref={sectionRef}
-      style={{
-        position: "relative",
-        height: "100dvh",
-        width: "100%",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      ref={containerRef}
+      className="relative flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#070708]"
     >
-      {/* Background with Parallax */}
+      {/* Background Image Layer with Parallax */}
       <motion.div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          y: imageY,
-          scale: imageScale,
-          zIndex: 0,
-        }}
+        style={{ scale: bgScale, y: bgY }}
+        className="absolute inset-0 z-0 h-full w-full"
       >
-        <img
+        <Image
           src="/images/hero.png"
-          alt="Vesper Background"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            filter: "grayscale(100%) brightness(1)",
-          }}
+          alt="Vesper Monolith Terroir"
+          fill
+          priority
+          className="object-cover filter grayscale contrast-125 brightness-60"
         />
       </motion.div>
 
-      {/* Gradient Overlays */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(to bottom, rgba(11,11,12,0.62) 0%, rgba(11,11,12,0.35) 50%, rgba(11,11,12,0.72) 100%)",
-          zIndex: 1,
-        }}
-      />
+      {/* Cinematic Vignette */}
+      <div className="absolute inset-0 z-1 bg-gradient-to-b from-[#070708]/80 via-[#070708]/30 to-[#070708]" />
+      <div className="absolute inset-0 z-1 bg-radial-gradient from-transparent via-[#070708]/40 to-[#070708]" />
 
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(to right, rgba(11,11,12,0.18) 0%, transparent 50%, rgba(11,11,12,0.18) 100%)",
-          zIndex: 2,
-        }}
-      />
-
-      {/* Content */}
+      {/* Hero Typography Stage */}
       <motion.div
-        style={{
-          position: "relative",
-          zIndex: 10,
-          textAlign: "center",
-          padding: "0 1.5rem",
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
+        style={{ y: textY, opacity: textOpacity }}
+        className="relative z-10 flex flex-col items-center text-center px-6"
       >
-        {/* Brand Name */}
-        <motion.h1
-          className="font-cormorant font-light text-platinum select-none"
-          style={{
-            fontSize: "clamp(2.5rem, 15vw, 14rem)",
-            letterSpacing: "0.2em",
-            lineHeight: 0.9,
-            paddingLeft: "0.2em",
-          }}
-          initial={{ opacity: 0, scale: 1.05, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.8, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          VESPER
-        </motion.h1>
+        {/* Top Micro-Metadata */}
+        <div className="overflow-hidden mb-6">
+          <motion.div
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-4 font-space text-[9px] tracking-[0.4em] text-[#82807a] uppercase"
+          >
+            <span>REYKJAVIK ARCHIVE</span>
+            <span className="text-[#c9a063]">◆</span>
+            <span>ALTITUDE 2,450 MASL</span>
+          </motion.div>
+        </div>
 
-        {/* Separator */}
+        {/* Monumental Headline */}
+        <div className="overflow-hidden">
+          <motion.h1
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1.4, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="font-cormorant font-light text-[#e8e6e1] select-none tracking-[0.18em]"
+            style={{
+              fontSize: "clamp(4.5rem, 18vw, 17rem)",
+              lineHeight: 0.85,
+            }}
+          >
+            VESPER
+          </motion.h1>
+        </div>
+
+        {/* Narrative Subtitle */}
+        <div className="overflow-hidden mt-6">
+          <motion.p
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-md font-space text-[11px] sm:text-xs tracking-[0.25em] text-[#82807a] uppercase leading-relaxed"
+          >
+            The quiet absolute. Forged in the shadows of forgotten altitudes.
+          </motion.p>
+        </div>
+
+        {/* Differential Magnetic CTA */}
         <motion.div
-          style={{ margin: "2rem 0" }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <span style={{ color: "#A6A6A6", fontSize: "0.6rem" }}>◆</span>
-        </motion.div>
-
-        {/* Tagline */}
-        <motion.p
-          className="font-space uppercase text-gunmetal"
-          style={{
-            fontSize: "clamp(0.62rem, 1.5vw, 0.92rem)",
-            letterSpacing: "0.28em",
-          }}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.8 }}
-        >
-          The quiet absolute
-        </motion.p>
-
-        {/* CTA */}
-        <motion.div
-          style={{ marginTop: "3rem" }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 1.1 }}
+          transition={{ duration: 1, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12"
         >
           <motion.button
-            onClick={scrollToProducts}
-            className="group font-space uppercase cursor-pointer"
-            style={{
-              position: "relative",
-              fontSize: "clamp(0.6rem, 1vw, 0.75rem)",
-              letterSpacing: "0.3em",
-              background: "transparent",
-              border: "none",
-              color: "#A6A6A6",
-              padding: "1rem 2rem",
-              transition: "color 0.5s ease",
-            }}
-            whileHover={{ scale: 1.05, color: "#E5E4E2" }}
-            whileTap={{ scale: 0.98 }}
+            ref={buttonRef}
+            onClick={scrollToCanon}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => playHover()}
+            style={{ x: springBtnX, y: springBtnY }}
+            className="group relative flex items-center justify-center overflow-hidden rounded-full border border-[#e8e6e1]/20 bg-[#070708]/60 px-10 py-5 backdrop-blur-md transition-colors hover:border-[#c9a063] cursor-pointer"
           >
-            Begin the Ritual
-            {/* Animated underline */}
             <motion.span
-              style={{
-                position: "absolute",
-                bottom: "0.5rem",
-                left: "2rem",
-                right: "2rem",
-                height: "1px",
-                backgroundColor: "#E5E4E2",
-                transformOrigin: "left",
-              }}
-              initial={{ scaleX: 0 }}
-              whileHover={{ scaleX: 1 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            />
+              style={{ x: textMagneticX, y: textMagneticY }}
+              className="flex items-center gap-3 font-space text-[10px] tracking-[0.35em] text-[#e8e6e1] uppercase transition-colors group-hover:text-[#c9a063]"
+            >
+              <span>Begin The Ritual</span>
+              <span className="text-xs transition-transform duration-300 group-hover:translate-x-1.5">↓</span>
+            </motion.span>
           </motion.button>
         </motion.div>
-
-        {/* Scroll indicator - desktop only */}
-        <motion.div
-          style={{
-            position: "absolute",
-            bottom: "2rem",
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-          className="hidden sm:flex"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-        >
-          <motion.div
-            style={{
-              width: "1px",
-              height: "3rem",
-              background:
-                "linear-gradient(to bottom, transparent 0%, rgba(166,166,166,0.55) 50%, rgba(206,206,206,1) 100%)",
-            }}
-            animate={{ scaleY: [1, 0.5, 1], opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </motion.div>
       </motion.div>
+
+      {/* Ambient Coordinates Ribbon (Bottom Left) */}
+      <div className="absolute bottom-8 left-8 sm:left-14 z-10 hidden sm:flex items-center gap-3 font-space text-[8px] tracking-[0.3em] text-[#82807a]">
+        <span>64°08&apos;43&quot;N 21°56&apos;28&quot;W</span>
+        <span className="text-[#82807a]/40">{"//"}</span>
+        <span>ZERO-LUX VAULT</span>
+      </div>
+
+      {/* Scroll indicator (Bottom Right) */}
+      <div className="absolute bottom-8 right-8 sm:right-12 z-10 flex items-center gap-3 font-space text-[8px] tracking-[0.3em] text-[#82807a]">
+        <span>ACT I</span>
+        <div className="h-px w-8 bg-[#82807a]/40" />
+        <span>SCROLL TO ADVANCE</span>
+      </div>
     </section>
   );
 }

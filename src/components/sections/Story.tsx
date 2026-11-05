@@ -1,204 +1,234 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSound } from "@/components/ui/SoundEngine";
+import Image from "next/image";
 
-const storyLines = [
-  "Born in the altitudes the world forgot,",
-  "where light fails and the canopy reigns.",
-  "",
-  "We discarded the noise. We killed the light.",
-  "What remains is absolute.",
-  "",
-  "Not a morning comfort.",
-  "A midnight conviction.",
+interface Chapter {
+  id: string;
+  numeral: string;
+  roman: string;
+  title: string;
+  tagline: string;
+  headline: string;
+  body: string;
+  spec: string;
+  image: string;
+}
+
+const chapters: Chapter[] = [
+  {
+    id: "chapter-1",
+    numeral: "01",
+    roman: "I",
+    title: "THE REJECTION",
+    tagline: "SURRENDER THE COMFORT",
+    headline: "We discarded the noise.\nWe killed the light.",
+    body: "This is not coffee to accelerate production or comfort routine. It is an uncompromised ritual of stillness.",
+    spec: "ZERO-LUX OPTICAL ROASTING",
+    image: "/images/story.png",
+  },
+  {
+    id: "chapter-2",
+    numeral: "02",
+    roman: "II",
+    title: "THE ALTITUDE",
+    tagline: "TROPOSPHERIC VEIL",
+    headline: "Forged in the shadows\nof forgotten altitudes.",
+    body: "Cultivated above 2,450 meters in volcanic caldera ash, where freezing night winds compress bean density to stone.",
+    spec: "2,450 MASL VOLCANIC CALDERA",
+    image: "/images/void.png",
+  },
+  {
+    id: "chapter-3",
+    numeral: "03",
+    roman: "III",
+    title: "THE ABSOLUTE",
+    tagline: "CRYOGENIC INITIATION",
+    headline: "Not a morning comfort.\nA midnight conviction.",
+    body: "Roasted in optical silence. Sealed under nitrogen cryogenic blankets. What remains is absolute.",
+    spec: "-196°C NITROGEN VAULT SEAL",
+    image: "/images/silhouette.png",
+  },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.02,
-    },
-  },
-};
-
-const charVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.35,
-      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
-    },
-  },
-};
-
 export default function Story() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
+  const { playClick, playHover } = useSound();
 
   return (
-    <section
-      ref={sectionRef}
-      style={{
-        position: "relative",
-        minHeight: "100dvh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "6rem 1.5rem",
-        overflow: "hidden",
-        backgroundColor: "#0b0b0c",
-      }}
-    >
-      {/* Background Image with Parallax */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          overflow: "hidden",
-          zIndex: 0,
-        }}
-      >
-        <motion.div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            left: 0,
-            width: "100%",
-            height: "120%",
-            y: imageY,
-          }}
-        >
-          <img
-            src="/images/story.png"
-            alt="The Origin"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "grayscale(100%) brightness(1)",
-            }}
-          />
-        </motion.div>
-      </div>
+    <section id="origin" className="relative bg-[#070708] px-6 sm:px-14 py-28 border-t border-[#e8e6e1]/8">
+      <div className="mx-auto max-w-7xl">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#e8e6e1]/8 pb-8">
+          <div>
+            <div className="flex items-center gap-3 font-space text-[9px] tracking-[0.35em] text-[#c9a063] uppercase">
+              <span>ACT II</span>
+              <span>/</span>
+              <span>THE ORIGIN DOCTRINE</span>
+            </div>
+            <h2 className="mt-3 font-cormorant text-4xl sm:text-6xl font-light text-[#e8e6e1] tracking-wide">
+              The Doctrine.
+            </h2>
+          </div>
 
-      {/* Gradient overlays */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(to bottom, rgba(11,11,12,0.72) 0%, transparent 30%, transparent 70%, rgba(11,11,12,0.72) 100%)",
-          zIndex: 1,
-        }}
-      />
+          <p className="mt-4 md:mt-0 max-w-sm font-space text-xs text-[#82807a] leading-relaxed">
+            Three core convictions etched in darkness. Select a monolith to reveal the origin thesis.
+          </p>
+        </div>
 
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(11,11,12,0.24)",
-          zIndex: 2,
-        }}
-      />
-
-      {/* Text Content */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 10,
-          maxWidth: "900px",
-          width: "100%",
-        }}
-      >
-        <div style={{ textAlign: "center" }}>
-          {storyLines.map((line, i) => {
-            if (line === "") {
-              return <div key={i} style={{ height: "2rem" }} />;
-            }
-
+        {/* Desktop: Expanding 3-Column Monolith Stage (h-[68vh]) */}
+        <div className="hidden md:flex mt-12 h-[68vh] w-full gap-4 overflow-hidden">
+          {chapters.map((ch, idx) => {
+            const isActive = activeIdx === idx;
             return (
-              <motion.p
-                key={i}
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                className="font-cormorant text-platinum font-light"
-                style={{
-                  fontSize: "clamp(1.25rem, 4vw, 2.5rem)",
-                  lineHeight: 1.6,
-                  marginBottom: "0.5rem",
+              <motion.div
+                key={ch.id}
+                layout
+                onClick={() => {
+                  playClick();
+                  setActiveIdx(idx);
                 }}
+                onMouseEnter={() => {
+                  if (!isActive) playHover();
+                }}
+                transition={{ type: "spring", damping: 28, stiffness: 220 }}
+                className={`relative flex cursor-pointer overflow-hidden rounded-xl border transition-colors duration-500 ${
+                  isActive
+                    ? "flex-3 border-[#c9a063]/50 bg-[#0c0c10]"
+                    : "flex-1 border-[#e8e6e1]/8 bg-[#09090c] hover:border-[#e8e6e1]/20"
+                }`}
               >
-                {line.split("").map((char, j) => (
-                  <motion.span
-                    key={j}
-                    variants={charVariants}
-                    style={{
-                      display: "inline-block",
-                      whiteSpace: char === " " ? "pre" : "normal",
-                    }}
+                {/* Background Image Layer */}
+                <div
+                  className={`absolute inset-0 transition-opacity duration-700 ${
+                    isActive ? "opacity-35" : "opacity-10"
+                  }`}
+                >
+                  <Image
+                    src={ch.image}
+                    alt={ch.title}
+                    fill
+                    className="object-cover filter grayscale contrast-125"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070708] via-[#070708]/70 to-[#070708]/30" />
+                </div>
+
+                {/* Inactive State: Vertical Compact Monolith */}
+                {!isActive ? (
+                  <div className="relative z-10 flex h-full w-full flex-col justify-between p-8 items-center text-center">
+                    <span className="font-space text-xs text-[#82807a] tracking-widest">
+                      {ch.numeral}
+                    </span>
+
+                    {/* Vertical Title */}
+                    <div className="flex flex-col items-center">
+                      <span className="font-cormorant text-6xl font-light text-[#e8e6e1]/20">
+                        {ch.roman}
+                      </span>
+                      <span className="font-space text-[10px] tracking-[0.35em] text-[#82807a] uppercase mt-4 writing-vertical rotate-180">
+                        {ch.title}
+                      </span>
+                    </div>
+
+                    <span className="text-xs text-[#82807a]/40 hover:text-[#c9a063] transition-colors">
+                      +
+                    </span>
+                  </div>
+                ) : (
+                  /* Active State: Expanded Editorial Monograph */
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6 }}
+                    className="relative z-10 flex h-full w-full flex-col justify-between p-10 sm:p-14"
                   >
-                    {char}
-                  </motion.span>
-                ))}
-              </motion.p>
+                    {/* Top Metadata */}
+                    <div className="flex items-center justify-between border-b border-[#e8e6e1]/10 pb-4">
+                      <div className="flex items-center gap-3 font-space text-[9px] tracking-[0.35em] text-[#c9a063] uppercase">
+                        <span>CHAPTER {ch.numeral}</span>
+                        <span>{"//"}</span>
+                        <span>{ch.title}</span>
+                      </div>
+                      <span className="font-space text-[9px] tracking-widest text-[#82807a]">
+                        {ch.tagline}
+                      </span>
+                    </div>
+
+                    {/* Center Headline */}
+                    <div className="my-auto max-w-xl">
+                      <h3 className="font-cormorant text-4xl sm:text-6xl font-light text-[#e8e6e1] leading-[1.1] whitespace-pre-line tracking-wide">
+                        {ch.headline}
+                      </h3>
+                      <p className="mt-6 font-space text-xs sm:text-sm text-[#82807a] leading-relaxed max-w-md">
+                        {ch.body}
+                      </p>
+                    </div>
+
+                    {/* Bottom Spec Badge */}
+                    <div className="flex items-center justify-between border-t border-[#e8e6e1]/10 pt-4 font-space text-[9px] tracking-[0.25em]">
+                      <span className="text-[#c9a063]">{ch.spec}</span>
+                      <span className="text-[#82807a]/60">ACT II MONOGRAPH</span>
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
             );
           })}
         </div>
 
-        {/* Decorative element */}
-        <motion.div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
-            marginTop: "3rem",
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          <span
-            style={{
-              width: "3rem",
-              height: "1px",
-              backgroundColor: "rgba(166,166,166,0.42)",
-            }}
-          />
-          <span style={{ color: "#A6A6A6", fontSize: "0.5rem" }}>◆</span>
-          <span
-            style={{
-              width: "3rem",
-              height: "1px",
-              backgroundColor: "rgba(166,166,166,0.42)",
-            }}
-          />
-        </motion.div>
+        {/* Mobile: Accordion Drawer (Stacked) */}
+        <div className="flex md:hidden flex-col gap-3 mt-8">
+          {chapters.map((ch, idx) => {
+            const isActive = activeIdx === idx;
+            return (
+              <div
+                key={ch.id}
+                onClick={() => {
+                  playClick();
+                  setActiveIdx(idx);
+                }}
+                className={`overflow-hidden rounded-xl border transition-colors ${
+                  isActive
+                    ? "border-[#c9a063]/50 bg-[#0c0c10]"
+                    : "border-[#e8e6e1]/8 bg-[#09090c]"
+                }`}
+              >
+                <div className="flex items-center justify-between p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="font-space text-xs text-[#c9a063]">{ch.numeral}</span>
+                    <span className="font-cormorant text-2xl font-light text-[#e8e6e1]">
+                      {ch.title}
+                    </span>
+                  </div>
+                  <span className="text-xs text-[#82807a]">{isActive ? "−" : "+"}</span>
+                </div>
+
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="px-5 pb-6 border-t border-[#e8e6e1]/6 pt-4"
+                    >
+                      <h4 className="font-cormorant text-2xl font-light text-[#e8e6e1] whitespace-pre-line leading-tight">
+                        {ch.headline}
+                      </h4>
+                      <p className="mt-3 font-space text-xs text-[#82807a] leading-relaxed">
+                        {ch.body}
+                      </p>
+                      <div className="mt-4 font-space text-[8px] tracking-widest text-[#c9a063]">
+                        {ch.spec}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
